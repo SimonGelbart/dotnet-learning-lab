@@ -1,10 +1,6 @@
----
-layout: module
-title: Module 01 — Modeling with modern C# types
-description: Use C# types to express identity, value, equality, stable keys, small domain concepts, and valid state transitions.
-permalink: /learning-paths/modern-csharp-type-system/modules/01-modeling-with-modern-csharp-types/
-source_url: https://github.com/SimonGelbart/dotnet-learning-lab/tree/main/learning-paths/modern-csharp-type-system/modules/01-modeling-with-modern-csharp-types
----
+# Module 01 — Modeling with modern C# types
+
+A practical module for backend developers who want to use C# types to express intent: identity, value, equality, stable keys, small domain concepts, and valid state transitions.
 
 This module adapts the first French talk, **Système de types C# moderne**, into learning-path format. The talk remains useful as presentation material; this module is meant to be followed asynchronously with samples, exercises, and self-check questions.
 
