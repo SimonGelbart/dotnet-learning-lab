@@ -4,6 +4,12 @@ Learning paths, talks, exercises, samples, and benchmarks for modern .NET backen
 
 This repository starts with a practical path on the modern C# type system. The original material was prepared in French as two talks; the repository keeps those talks available while organizing the content as a reusable learning lab.
 
+Published site, once GitHub Pages is enabled:
+
+```text
+https://SimonGelbart.github.io/dotnet-learning-lab/
+```
+
 ## Learning paths
 
 | Path | Status | Focus |
@@ -15,8 +21,8 @@ This repository starts with a practical path on the modern C# type system. The o
 ```text
 learning-paths/
   modern-csharp-type-system/
-    README.md                 # English overview
-    README.fr.md              # French overview
+    README.md                 # GitHub overview
+    modules/                  # Markdown modules rendered by GitHub Pages
     docs/                     # Supporting notes
     talks/                    # Original French presentations
     src/                      # Runnable samples and benchmarks

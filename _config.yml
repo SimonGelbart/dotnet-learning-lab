@@ -1,0 +1,12 @@
+title: dotnet-learning-lab
+description: Learning paths, talks, exercises, samples, and benchmarks for modern .NET backend development.
+url: "https://SimonGelbart.github.io"
+baseurl: "/dotnet-learning-lab"
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+exclude:
+  - src/
+  - tools/
+  - README.fr.md
+  - .vscode/

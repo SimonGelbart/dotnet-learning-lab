@@ -14,6 +14,12 @@ The path starts from two French talks and turns them into a reusable learning la
 - When `Span<T>`, `ReadOnlySpan<T>`, `Memory<T>`, and `ReadOnlyMemory<T>` are useful.
 - Why allocation-aware code should start from measurement, not from premature optimization.
 
+## Modules
+
+| Module | Status | Focus |
+| --- | --- | --- |
+| [01 — Modeling with modern C# types](modules/01-modeling-with-modern-csharp-types/) | Draft | Identity vs value, generated equality, stable keys, strongly typed IDs, value objects, and type-driven state modeling. |
+
 ## Current material
 
 | Item | Language | Description |
@@ -34,13 +40,3 @@ dotnet run --project src/MemoryTypes.Samples -- --all
 dotnet run -c Release --project src/DomainTypes.Benchmarks -- --filter *DictionaryKey*
 dotnet run -c Release --project src/MemoryTypes.Benchmarks
 ```
-
-## Planned modules
-
-1. Choosing between identity and value.
-2. Records, structs, and generated equality.
-3. Strongly typed IDs and value objects.
-4. Type-driven state modeling.
-5. Memory-oriented types in .NET.
-6. `Span<T>`, `Memory<T>`, and lifetime boundaries.
-7. Allocation-aware design and benchmarks.
