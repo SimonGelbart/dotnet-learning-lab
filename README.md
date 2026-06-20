@@ -2,7 +2,7 @@
 
 Learning paths, talks, exercises, samples, and benchmarks for modern .NET backend development.
 
-This repository starts with a practical path on the modern C# type system. The original material was prepared in French as two talks; the repository keeps those talks available while organizing the content as a reusable learning lab.
+This repository starts with an English-first path on **Modern C# Type Design**. The original French talks are kept as archived source material, while the public learning experience is organized as short written lessons with runnable samples.
 
 Published site, once GitHub Pages is enabled:
 
@@ -14,7 +14,7 @@ https://SimonGelbart.github.io/dotnet-learning-lab/
 
 | Path | Status | Focus |
 | --- | --- | --- |
-| [Modern C# type system](learning-paths/modern-csharp-type-system/) | In progress | Records, value semantics, strongly typed IDs, type-driven state modeling, `Span<T>`, `Memory<T>`, and allocation-aware design. |
+| [Modern C# Type Design](learning-paths/modern-csharp-type-system/) | In progress | Records, value semantics, strongly typed IDs, stable dictionary keys, value objects, type-driven state modeling, and later memory-oriented .NET types. |
 
 ## Repository structure
 
@@ -24,7 +24,7 @@ learning-paths/
     README.md                 # GitHub overview
     modules/                  # Markdown modules rendered by GitHub Pages
     docs/                     # Supporting notes
-    talks/                    # Original French presentations
+    talks/                    # Archived French presentations
     src/                      # Runnable samples and benchmarks
 
 tools/                        # Local helper scripts
@@ -34,7 +34,7 @@ tools/                        # Local helper scripts
 
 - .NET SDK 8 or newer.
 - Optional: a modern browser and VS Code once the generated HTML decks are restored.
-- Optional: VS Code, if you want local `vscode://file` links from the presentations.
+- Optional: VS Code, if you want local `vscode://file` links from the archived presentations.
 
 ## Quick start
 
@@ -51,12 +51,6 @@ Validate the local setup:
 ./tools/validate-before-talk.sh
 ```
 
-Generate local VS Code links for the HTML presentations:
-
-```bash
-./tools/setup-local-links.sh
-```
-
 ## Current scope
 
-This is intentionally a learning lab, not a polished course yet. The first goal is to preserve the talks, samples, and benchmarks in a clean repository structure; written modules and exercises can be added progressively.
+This is intentionally a learning lab, not a polished course. The first goal is to turn the type-design material into a clean web learning path with short lessons, runnable samples, and exercises.

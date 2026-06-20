@@ -1,18 +1,18 @@
-# Modern C# type system
+# Modern C# Type Design
 
-A practical learning path for backend developers who want to use the C# type system deliberately.
+A practical learning path for intermediate .NET developers who want to use C# types deliberately.
 
-The path starts from two French talks and turns them into a reusable learning lab covering domain modeling, value semantics, strongly typed IDs, type-driven state modeling, and memory-oriented .NET types.
+The path shows how records, value objects, strongly typed IDs, stable dictionary keys, and state models can make backend code cleaner and harder to misuse.
 
 ## What you will learn
 
 - When to model something as an identity versus a value.
 - How `class`, `record class`, `struct`, `record struct`, and `readonly record struct` differ in practice.
 - How generated equality changes collection behavior and API expectations.
+- Why dictionary keys must be stable after insertion.
 - How strongly typed IDs and value objects reduce primitive obsession.
 - How to model valid states with explicit types instead of flags and nullable data.
-- When `Span<T>`, `ReadOnlySpan<T>`, `Memory<T>`, and `ReadOnlyMemory<T>` are useful.
-- Why allocation-aware code should start from measurement, not from premature optimization.
+- Why serialization needs an explicit contract when internal models become richer.
 
 ## Modules
 
@@ -20,12 +20,12 @@ The path starts from two French talks and turns them into a reusable learning la
 | --- | --- | --- |
 | [01 — Modeling with modern C# types](modules/01-modeling-with-modern-csharp-types/) | Draft | Identity vs value, generated equality, stable keys, strongly typed IDs, value objects, and type-driven state modeling. |
 
-## Current material
+## Archived material
 
 | Item | Language | Description |
 | --- | --- | --- |
-| [Talk 1 — Modern C# type system](talks/01-modern-csharp-type-system-fr/) | French | Domain modeling with modern C# types. |
-| [Talk 2 — .NET memory types](talks/02-dotnet-memory-types-fr/) | French | `Span<T>`, `Memory<T>`, `ref struct`, `stackalloc`, pooling, and benchmarks. |
+| [Talk 1 — Modern C# type system](talks/01-modern-csharp-type-system-fr/) | French | Original source material for Module 01. |
+| [Talk 2 — .NET memory types](talks/02-dotnet-memory-types-fr/) | French | Original source material for a future memory-oriented module. |
 
 ## Run samples
 
