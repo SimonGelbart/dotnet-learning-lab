@@ -2,7 +2,7 @@
 
 A practical module for backend developers who want to use C# types to express intent: identity, value, equality, stable keys, small domain concepts, and valid state transitions.
 
-This README is the GitHub-facing overview. The web version starts at `index.md` and splits the module into short lessons.
+This README is the GitHub-facing overview. The web version starts at [`index.md`](index.md) and follows the narrative of the original presentation with short lessons.
 
 ## Audience
 
@@ -34,10 +34,11 @@ dotnet run --project learning-paths/modern-csharp-type-system/src/DomainTypes.Sa
 3. [Stable dictionary keys](03-stable-dictionary-keys.md)
 4. [Strongly typed IDs](04-strongly-typed-ids.md)
 5. [Value objects](05-value-objects.md)
-6. [`record struct` vs `readonly record struct`](06-record-structs.md)
+6. [Mutability traps](06-record-structs.md)
 7. [Type-driven state modeling](07-type-driven-state-modeling.md)
-8. [Serialization notes](08-serialization.md)
-9. [Exercises](exercises.md)
+8. [Serialization contracts](08-serialization.md)
+9. [Decision guide](09-decision-guide.md)
+10. [Capstone exercises](exercises.md)
 
 ## Core idea
 
