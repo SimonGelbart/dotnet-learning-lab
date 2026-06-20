@@ -1,0 +1,19 @@
+---
+layout: default
+---
+<article class="module">
+  <p class="eyebrow">Learning path module</p>
+  <h1>{{ page.title }}</h1>
+  {% if page.description %}
+  <p class="lede">{{ page.description }}</p>
+  {% endif %}
+  <div class="module-actions">
+    <a class="button" href="{{ '/learning-paths/modern-csharp-type-system/' | relative_url }}">Back to path</a>
+    {% if page.source_url %}
+    <a class="button secondary" href="{{ page.source_url }}">View source on GitHub</a>
+    {% endif %}
+  </div>
+  <div class="content">
+    {{ content }}
+  </div>
+</article>
