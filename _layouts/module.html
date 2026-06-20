@@ -7,13 +7,34 @@ layout: default
   {% if page.description %}
   <p class="lede">{{ page.description }}</p>
   {% endif %}
+
   <div class="module-actions">
-    <a class="button" href="{{ '/learning-paths/modern-csharp-type-system/' | relative_url }}">Back to path</a>
+    <a class="button" href="{{ page.module_url | default: '/learning-paths/modern-csharp-type-system/modules/01-modeling-with-modern-csharp-types/' | relative_url }}">{{ page.module_label | default: 'Back to module' }}</a>
+    <a class="button secondary" href="{{ '/learning-paths/modern-csharp-type-system/' | relative_url }}">Back to path</a>
     {% if page.source_url %}
-    <a class="button secondary" href="{{ page.source_url }}">View source on GitHub</a>
+    <a class="button secondary" href="{{ page.source_url }}">View source</a>
     {% endif %}
   </div>
+
+  {% if page.sample_command %}
+  <section class="sample-command" aria-label="Runnable sample">
+    <p class="eyebrow">Runnable sample</p>
+    <pre><code>{{ page.sample_command }}</code></pre>
+  </section>
+  {% endif %}
+
   <div class="content">
     {{ content }}
   </div>
+
+  {% if page.previous_url or page.next_url %}
+  <nav class="lesson-nav" aria-label="Lesson navigation">
+    {% if page.previous_url %}
+    <a class="button secondary" href="{{ page.previous_url | relative_url }}">← {{ page.previous_label | default: 'Previous' }}</a>
+    {% endif %}
+    {% if page.next_url %}
+    <a class="button" href="{{ page.next_url | relative_url }}">{{ page.next_label | default: 'Next' }} →</a>
+    {% endif %}
+  </nav>
+  {% endif %}
 </article>
