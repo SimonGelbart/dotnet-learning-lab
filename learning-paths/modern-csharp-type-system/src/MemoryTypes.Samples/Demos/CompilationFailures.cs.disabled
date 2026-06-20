@@ -1,0 +1,23 @@
+// This file is intentionally excluded from compilation.
+// Copy one snippet at a time into a .cs file during the presentation.
+
+namespace MemoryTypes.Samples.Demos;
+
+public sealed class SpanHolder
+{
+    // Expected compiler error:
+    // Field or auto-implemented property cannot be of type 'ReadOnlySpan<char>'
+    // unless it is an instance member of a ref struct.
+    public ReadOnlySpan<char> Buffer;
+}
+
+public static class SpanFailures
+{
+    public static void SpanInList()
+    {
+        // Expected compiler error:
+        // ref structs cannot be used as generic type arguments in normal collections.
+        var values = new List<ReadOnlySpan<char>>();
+        values.Add("abc".AsSpan());
+    }
+}
