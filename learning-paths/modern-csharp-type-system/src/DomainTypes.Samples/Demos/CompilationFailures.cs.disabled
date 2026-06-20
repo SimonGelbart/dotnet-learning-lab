@@ -1,0 +1,17 @@
+// This file is intentionally excluded from compilation.
+// Copy one snippet at a time into a .cs file during the presentation.
+
+namespace DomainTypes.Samples.Demos;
+
+public static class CompilationFailures
+{
+    public static void StronglyTypedIdsDoNotMix()
+    {
+        var customerId = new StronglyTypedIdsDemo.CustomerId(Guid.NewGuid());
+        var service = new StronglyTypedIdsDemo.OrderService();
+
+        // Expected compiler error:
+        // Argument 1: cannot convert from 'CustomerId' to 'OrderId'
+        service.CancelOrder(customerId);
+    }
+}

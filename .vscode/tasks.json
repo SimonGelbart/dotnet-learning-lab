@@ -1,0 +1,47 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Type system - Run all domain samples",
+      "type": "shell",
+      "command": "dotnet run --project learning-paths/modern-csharp-type-system/src/DomainTypes.Samples -- --all",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Type system - Strongly typed IDs demo",
+      "type": "shell",
+      "command": "dotnet run --project learning-paths/modern-csharp-type-system/src/DomainTypes.Samples -- --demo ids",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Type system - Dictionary benchmark",
+      "type": "shell",
+      "command": "dotnet run -c Release --project learning-paths/modern-csharp-type-system/src/DomainTypes.Benchmarks -- --filter *DictionaryKey*",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Memory types - Run all samples",
+      "type": "shell",
+      "command": "dotnet run --project learning-paths/modern-csharp-type-system/src/MemoryTypes.Samples -- --all",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Memory types - CSV parsing benchmark",
+      "type": "shell",
+      "command": "dotnet run -c Release --project learning-paths/modern-csharp-type-system/src/MemoryTypes.Benchmarks -- --filter *CsvParsing*",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Memory types - Memory async demo",
+      "type": "shell",
+      "command": "dotnet run --project learning-paths/modern-csharp-type-system/src/MemoryTypes.Samples -- --demo memory-async",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Validate learning lab",
+      "type": "shell",
+      "command": "./tools/validate-before-talk.sh",
+      "problemMatcher": "$msCompile"
+    }
+  ]
+}
