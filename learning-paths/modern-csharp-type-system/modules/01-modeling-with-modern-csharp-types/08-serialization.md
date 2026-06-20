@@ -1,27 +1,64 @@
 ---
 layout: module
-title: 08 — Serialization notes
-description: Internal type models still need deliberate API and persistence contracts.
+title: 08 — Serialization contracts
+description: A strong internal model is not automatically a good external contract.
 module_url: /learning-paths/modern-csharp-type-system/modules/01-modeling-with-modern-csharp-types/
 module_label: Module 01
 sample_command: dotnet run --project learning-paths/modern-csharp-type-system/src/DomainTypes.Samples -- --demo serialization
 previous_url: /learning-paths/modern-csharp-type-system/modules/01-modeling-with-modern-csharp-types/07-type-driven-state-modeling/
 previous_label: Type-driven state modeling
-next_url: /learning-paths/modern-csharp-type-system/modules/01-modeling-with-modern-csharp-types/exercises/
-next_label: Exercises
+next_url: /learning-paths/modern-csharp-type-system/modules/01-modeling-with-modern-csharp-types/09-decision-guide/
+next_label: Decision guide
 ---
 
 ## Goal
 
-Avoid exposing accidental internal model details through serialization.
+Choose the external shape deliberately when internal models become richer.
 
-## Why this matters
+## The new question
 
-Type-driven state models are useful inside the application, but public APIs and persistence models need stable contracts.
+The state model is now stronger inside the application.
 
-If your serialized shape depends directly on internal type names, later refactors can become breaking changes.
+But what should leave the application?
 
-## Questions to decide deliberately
+A public API, database row, event payload, or cache entry is a contract. If it accidentally mirrors internal type names, refactoring becomes a breaking change.
+
+## Type-rich internal model
+
+Inside the application, this can be expressive:
+
+```csharp
+public abstract record SubscriptionState;
+public sealed record Trial(DateTime EndsAt) : SubscriptionState;
+public sealed record Active : SubscriptionState;
+public sealed record Cancelled(DateTime CancelledAt) : SubscriptionState;
+```
+
+## Possible serialized shapes
+
+A serialized contract might use an explicit discriminator:
+
+```json
+{
+  "state": "trial",
+  "trialEndsAt": "2026-07-01T00:00:00Z"
+}
+```
+
+Another state can have a different shape:
+
+```json
+{
+  "state": "cancelled",
+  "cancelledAt": "2026-06-20T00:00:00Z"
+}
+```
+
+That may be readable, but it must be chosen deliberately.
+
+## Contract questions
+
+Before exposing the model, decide:
 
 - What discriminator name do you use?
 - Is the serialized shape stable?
@@ -31,10 +68,10 @@ If your serialized shape depends directly on internal type names, later refactor
 
 ## Practical rule
 
-Use rich internal types to make the application code safer, but define the serialized contract explicitly.
+Use rich internal types to make application code safer. Use explicit DTOs or explicit serialization rules to keep contracts stable.
 
 ## Self-check
 
-- What serialization decisions appear when you model states with a record hierarchy?
-- Which parts of your internal model are safe to expose?
-- Which parts should stay private to the application?
+- Which parts of the internal model are safe to expose?
+- Which parts are implementation details?
+- Would a flat DTO be clearer for clients?

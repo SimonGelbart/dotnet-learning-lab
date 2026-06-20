@@ -1,7 +1,7 @@
 ---
 layout: module
 title: 02 — Records and generated equality
-description: Records are not magic domain objects. Their most important behavior is generated value-based equality.
+description: Records are not magic domain objects. Their most visible behavior is generated value-based equality.
 module_url: /learning-paths/modern-csharp-type-system/modules/01-modeling-with-modern-csharp-types/
 module_label: Module 01
 sample_command: dotnet run --project learning-paths/modern-csharp-type-system/src/DomainTypes.Samples -- --demo collections
@@ -13,44 +13,77 @@ next_label: Stable dictionary keys
 
 ## Goal
 
-Understand what changes when a type uses generated equality.
+Understand what changes when equality is generated from data.
 
-## Why this matters
+A `record class` is still a reference type. It can still live on the heap and be passed by reference. The big modeling change is equality.
 
-A `record class` gives you value-based equality, generated `Equals`, generated `GetHashCode`, and `with` expressions.
+## The surprise
 
-That changes how collections behave. It is especially visible in `HashSet<T>` and `Dictionary<TKey, TValue>`.
+Start with a normal class:
 
-## Problem example
+```csharp
+private sealed class ProductKeyClass
+{
+    public ProductKeyClass(string sku, string country)
+    {
+        Sku = sku;
+        Country = country;
+    }
 
-Two different `class` instances with the same constructor values are not equal by default:
+    public string Sku { get; }
+    public string Country { get; }
+}
+```
+
+Now create two instances:
 
 ```csharp
 var a = new ProductKeyClass("ABC", "FR");
 var b = new ProductKeyClass("ABC", "FR");
-var set = new HashSet<ProductKeyClass> { a, b };
 ```
 
-The set keeps both items because default class equality is reference equality.
+They look equivalent to a human, but they are not equal by default. They are two different objects.
 
-## Better model
-
-If content equality is part of the domain concept, a record can be useful:
+## Records change the question
 
 ```csharp
 private sealed record ProductKeyRecord(string Sku, string Country);
 ```
 
-Now two product keys with the same SKU and country compare equal by content.
+Now two instances with the same SKU and country compare equal by content.
 
-## Trade-off
+That is convenient, but it is not automatically correct. You still need to decide whether content equality is part of the domain concept.
 
-Records make equality convenient, but they do not decide whether equality is correct for your domain.
+## What record generates
 
-Use a record when value equality is part of the model. Use a class when identity matters.
+For this module, remember the practical effects:
+
+- generated `Equals`,
+- generated `GetHashCode`,
+- generated `ToString`,
+- support for `with` expressions,
+- value-based equality for records.
+
+The important part for the next lesson is `Equals` and `GetHashCode`.
+
+## Teaching moment
+
+Before you run the sample, predict this:
+
+```csharp
+var a = new ProductKeyRecord("ABC", "FR");
+var b = new ProductKeyRecord("ABC", "FR");
+var set = new HashSet<ProductKeyRecord> { a, b };
+
+Console.WriteLine(set.Count);
+```
+
+If the answer feels obvious, ask the same question with a class.
+
+That small difference is where many collection bugs begin.
 
 ## Self-check
 
-- What does a record generate that matters for dictionaries?
-- When would generated equality be wrong?
-- When would a custom `IEqualityComparer<T>` be clearer than changing the model type?
+- What does a record generate that matters for collections?
+- When would generated equality be wrong for a domain object?
+- Why is `record class` not just a shorter `class`?

@@ -1,55 +1,74 @@
 ---
 layout: module
-title: Exercises
-description: Practice the module ideas with hints, suggested solutions, and reflection questions.
+title: Capstone exercises
+description: Refactor one small subscription pricing model step by step.
 module_url: /learning-paths/modern-csharp-type-system/modules/01-modeling-with-modern-csharp-types/
 module_label: Module 01
-previous_url: /learning-paths/modern-csharp-type-system/modules/01-modeling-with-modern-csharp-types/08-serialization/
-previous_label: Serialization notes
+previous_url: /learning-paths/modern-csharp-type-system/modules/01-modeling-with-modern-csharp-types/09-decision-guide/
+previous_label: Decision guide
 ---
 
-## Exercise 1 — Replace primitive IDs
+## Capstone — Subscription pricing model
 
-Take a service method that accepts multiple `Guid` parameters. Replace them with strongly typed IDs.
+The exercises now follow one progression. You start with weak primitives, then improve the model one decision at a time.
+
+The goal is not to write a complete application. The goal is to practice choosing type shapes deliberately.
+
+## Starting point
 
 ```csharp
-void Transfer(Guid sourceAccountId, Guid destinationAccountId, Guid initiatedByUserId)
+public sealed class Subscription
+{
+    public Guid CustomerId { get; set; }
+    public Guid SubscriptionId { get; set; }
+    public Guid PlanId { get; set; }
+
+    public string Sku { get; set; } = "";
+    public string Country { get; set; } = "";
+    public decimal MonthlyPrice { get; set; }
+    public string Currency { get; set; } = "EUR";
+
+    public bool IsTrial { get; set; }
+    public bool IsActive { get; set; }
+    public bool IsCancelled { get; set; }
+    public DateTime? TrialEndsAt { get; set; }
+    public DateTime? CancelledAt { get; set; }
+}
 ```
+
+## Exercise 1 — Predict collection behavior
+
+Create a product key as a normal class with `Sku` and `Country`. Use two equivalent instances in a `HashSet<T>` and as dictionary lookup keys.
 
 <details>
 <summary>Hint</summary>
 
-Create one small type for each domain concept, even if they all wrap `Guid`.
+Before running the code, predict whether the collection uses object identity or content equality.
 
 </details>
 
 <details>
-<summary>Suggested solution</summary>
+<summary>Suggested direction</summary>
 
-```csharp
-public readonly record struct AccountId(Guid Value);
-public readonly record struct UserId(Guid Value);
-
-void Transfer(AccountId source, AccountId destination, UserId initiatedBy) { }
-```
+Compare three options: normal class, record class, and `readonly record struct`.
 
 </details>
 
 <details>
 <summary>Reflection</summary>
 
-Which mistakes does the compiler now prevent? What serialization or mapping code would you need in a real application?
+Which type best communicates “this is a small stable catalog key”?
 
 </details>
 
-## Exercise 2 — Fix a dictionary key
+## Exercise 2 — Stabilize the catalog key
 
-Create a dictionary keyed by a mutable class, mutate the key after insertion, and observe the lookup failure. Then refactor the key to a stable value.
+Replace `Sku` and `Country` on the subscription with a named product key.
 
 <details>
 <summary>Hint</summary>
 
-Hash-based collections use equality and hash code behavior to place keys. If the key changes after insertion, lookup may use the wrong hash bucket.
+The key is small, content-based, and likely to be used in dictionaries.
 
 </details>
 
@@ -58,10 +77,6 @@ Hash-based collections use equality and hash code behavior to place keys. If the
 
 ```csharp
 public readonly record struct ProductKey(string Sku, string Country);
-
-var key = new ProductKey("ABC", "FR");
-var prices = new Dictionary<ProductKey, decimal>();
-prices[key] = 19.99m;
 ```
 
 </details>
@@ -69,18 +84,18 @@ prices[key] = 19.99m;
 <details>
 <summary>Reflection</summary>
 
-Which part of the original key was unstable? Should this key be a class, record class, or readonly record struct?
+What bug would become easier to catch if the code used `ProductKey` everywhere instead of two strings?
 
 </details>
 
-## Exercise 3 — Model a state machine
+## Exercise 3 — Introduce strongly typed IDs
 
-Model an onboarding process with explicit states: `Invited`, `Registered`, and `Rejected`. Avoid booleans and nullable fields on one big object.
+Replace the three `Guid` properties with typed IDs.
 
 <details>
 <summary>Hint</summary>
 
-Start with an abstract base state and one concrete record per valid state.
+Customer, subscription, and plan IDs all share the same primitive representation, but they are different concepts.
 
 </details>
 
@@ -88,10 +103,9 @@ Start with an abstract base state and one concrete record per valid state.
 <summary>Suggested solution</summary>
 
 ```csharp
-public abstract record OnboardingState;
-public sealed record Invited(string Email, DateTime InvitedAt) : OnboardingState;
-public sealed record Registered(UserId UserId, DateTime RegisteredAt) : OnboardingState;
-public sealed record Rejected(string Reason, DateTime RejectedAt) : OnboardingState;
+public readonly record struct CustomerId(Guid Value);
+public readonly record struct SubscriptionId(Guid Value);
+public readonly record struct PlanId(Guid Value);
 ```
 
 </details>
@@ -99,6 +113,92 @@ public sealed record Rejected(string Reason, DateTime RejectedAt) : OnboardingSt
 <details>
 <summary>Reflection</summary>
 
-Which invalid combinations disappeared? Which business rules still need explicit validation? How would you serialize this model?
+Which method calls can the compiler now protect? Where will mapping code be needed?
+
+</details>
+
+## Exercise 4 — Add Money
+
+Replace `MonthlyPrice` and `Currency` with a `Money` value object.
+
+<details>
+<summary>Hint</summary>
+
+The rule to protect is not only “there is an amount”. The rule is “amount and currency belong together”.
+
+</details>
+
+<details>
+<summary>Suggested direction</summary>
+
+Start with:
+
+```csharp
+public readonly record struct Money(decimal Amount, string Currency);
+```
+
+Then add validation or operations only when the exercise needs them.
+
+</details>
+
+<details>
+<summary>Reflection</summary>
+
+What operation should fail if two `Money` values have different currencies?
+
+</details>
+
+## Exercise 5 — Replace flags with states
+
+Replace the boolean and nullable state fields with explicit subscription states.
+
+<details>
+<summary>Hint</summary>
+
+Each state should carry only the data that makes sense for that state.
+
+</details>
+
+<details>
+<summary>Suggested solution</summary>
+
+```csharp
+public abstract record SubscriptionState;
+public sealed record Trial(DateTime EndsAt) : SubscriptionState;
+public sealed record Active : SubscriptionState;
+public sealed record Cancelled(DateTime CancelledAt) : SubscriptionState;
+```
+
+</details>
+
+<details>
+<summary>Reflection</summary>
+
+Which invalid combinations disappeared? Which transition rules still need explicit validation?
+
+</details>
+
+## Exercise 6 — Choose the contract
+
+Decide how the improved model should be serialized for an API.
+
+<details>
+<summary>Hint</summary>
+
+Do not assume the internal type hierarchy must be the public JSON shape.
+
+</details>
+
+<details>
+<summary>Suggested direction</summary>
+
+Compare a flat DTO with a discriminated state shape. Choose based on client needs, versioning, and stability.
+
+</details>
+
+<details>
+<summary>Reflection</summary>
+
+Which shape is easiest for clients to consume? Which shape best preserves the domain model? Where is the compromise?
 
 </details>
