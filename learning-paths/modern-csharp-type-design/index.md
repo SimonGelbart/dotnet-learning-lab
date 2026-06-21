@@ -30,17 +30,24 @@ By the end, you should be able to:
 - recognize serialization trade-offs when internal models become stronger;
 - use a practical decision guide under delivery pressure.
 
+## Start here
+
+The first module is the complete initial course:
+
+- [Module 01 - Modeling with modern C# types](modules/01-modeling-with-modern-csharp-types/)
+
+It is designed to be read in order and completed in one sitting.
+
 ## Course path
 
-1. Orientation: type choice as a behavior contract.
-2. Identity or value?
-3. Equality becomes visible.
-4. Stable keys and shallow immutability.
-5. Small business values.
-6. Modeling valid states.
-7. Decision guide.
-
-Start with the [course outline](outline.md).
+1. [Identity or value?](modules/01-modeling-with-modern-csharp-types/01-identity-or-value.md)
+2. [Equality becomes visible](modules/01-modeling-with-modern-csharp-types/02-equality-becomes-visible.md)
+3. [Stable keys and shallow immutability](modules/01-modeling-with-modern-csharp-types/03-stable-keys-and-immutability.md)
+4. [Small business values](modules/01-modeling-with-modern-csharp-types/04-small-business-values.md)
+5. [Modeling valid states](modules/01-modeling-with-modern-csharp-types/05-modeling-valid-states.md)
+6. [JSON contracts](modules/01-modeling-with-modern-csharp-types/06-json-contracts.md)
+7. [Decision guide](modules/01-modeling-with-modern-csharp-types/07-decision-guide.md)
+8. [Optional exercises](modules/01-modeling-with-modern-csharp-types/exercises.md)
 
 ## Local setup
 
