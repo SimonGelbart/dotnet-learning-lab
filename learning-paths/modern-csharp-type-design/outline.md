@@ -6,6 +6,8 @@ Course promise:
 
 Target duration: **45-60 minutes**.
 
+The course should feel like a web version of a successful live talk: short, concrete, progressive, and focused on judgement.
+
 ## 0. Orientation - 5 min
 
 Mission: understand why type choice matters.
@@ -21,7 +23,8 @@ Show the course map:
 3. stable keys and immutability;
 4. small business values;
 5. valid states;
-6. decision guide.
+6. JSON contracts;
+7. decision guide.
 
 ## 1. Identity or value? - 8 min
 
@@ -39,8 +42,6 @@ Key distinction:
 - `class` for identity, lifecycle, shared state, and behavior;
 - `record class` for data-oriented reference types with value equality;
 - `readonly record struct` for small stable values.
-
-Checkpoint: classify five names as likely identity, value, DTO, or state.
 
 ## 2. Equality becomes visible - 10 min
 
@@ -85,8 +86,6 @@ Key distinction:
 - `readonly` protects assignment;
 - it does not make referenced objects deeply immutable.
 
-Checkpoint: decide which models are safe dictionary keys.
-
 ## 4. Small business values - 10 min
 
 Mission: replace fragile conventions with types.
@@ -107,7 +106,7 @@ Warning:
 
 `record struct` is mutable by default. Prefer `readonly record struct` for small stable values unless mutation is intentional.
 
-## 5. Modeling valid states - 14 min
+## 5. Modeling valid states - 12 min
 
 Mission: make impossible subscription states harder to represent.
 
@@ -116,18 +115,26 @@ Progression:
 1. bool flags and nullable dates;
 2. `enum` status;
 3. dedicated record states;
-4. pattern matching;
-5. JSON trade-off.
+4. pattern matching.
 
 The learner should see that:
 
 - bool flags allow invalid combinations;
 - an enum improves exclusivity;
 - state-specific data still needs a better home;
-- dedicated state types attach the right data to the right state;
-- serialization needs an explicit external contract.
+- dedicated state types attach the right data to the right state.
 
-## 6. Decision guide - 5 min
+## 6. JSON contracts - 4 min
+
+Mission: understand the cost of a stronger internal model.
+
+Show that a record-state model may need a stable discriminator such as `kind` at the wire boundary.
+
+Key rule:
+
+Design JSON as a contract, not as an accident of internal modeling.
+
+## 7. Decision guide - 3 min
 
 Mission: leave with a practical rule of thumb.
 
