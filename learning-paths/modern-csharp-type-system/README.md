@@ -4,6 +4,8 @@ A practical learning path for intermediate .NET developers who want to use C# ty
 
 The path shows how records, value objects, strongly typed IDs, stable dictionary keys, and state models can make backend code cleaner and harder to misuse.
 
+> Transition note: this folder contains the current working material, split lessons, runnable samples, benchmarks, and archived talks. The future public course shape is being defined under [`../modern-csharp-type-design/`](../modern-csharp-type-design/).
+
 ## What you will learn
 
 - When to model something as an identity versus a value.
